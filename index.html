@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'IBM Plex Sans Thai', sans-serif; background-color: #f1f5f9; color: #1e293b; }
+        h1, h2, h3, .logo-font { font-family: 'Cinzel', serif; }
+        .promo-banner { background: linear-gradient(90deg, #3956d4 0%, #0066ff 100%); }
+        .room-card { 
+        
+            transition: all 0.4s ease; 
+            border: 1px solid #000000; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            border-radius: 2rem; 
+            background-color: white; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .room-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 25px -5px rgba(5, 112, 253, 0.1); 
+            border-color: #0970ff; 
+        }
+        .discount-badge { 
+            background: #1c7efd; 
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 12px; 
+            font-weight: 900; 
+            font-size: 14px; 
+            z-index: 20; 
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); 
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .fac-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+        .fac-value { font-size: 13px; font-weight: 500; color: #334155; margin-bottom: 4px; }
+        .btn-booking { background: #1e293b; transition: all 0.3s ease; border-radius: 1rem; }
+        .btn-booking:hover { background: #f97316; transform: scale(1.02); }
+        .slider-container { position: relative; overflow: hidden; width: 100%; height: 450px; border-bottom: 1px solid #e2e8f0; background: #000; }
+        .slider-wrapper { display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 100%; }
+        .slider-item { min-width: 100%; height: 100%; object-fit: cover; }
+        .nav-btn { background: rgba(255,255,255,0.8); backdrop-filter: blur(4px); width: 45px; height: 45px; border-radius: 50%; font-weight: bold; transition: all 0.3s; }
+        .nav-btn:hover { background: #fff; transform: scale(1.1); }
+        .date-input, .select-input { border: 1px solid #cbd5e1; background: #f8fafc; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 12px; outline: none; }
+        .amenity-tag { display: flex; flex-direction: column; border-left: 2px solid #e2e8f0; padding-left: 10px; margin-bottom: 8px; }
+
+        /* Extra Bed Styles */
+        .extra-bed-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1.5px solid #bae6fd;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-top: 16px;
+        }
+        .extra-bed-section.orange-theme {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border-color: #fed7aa;
+        }
+        .extra-bed-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #0369a1;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .extra-bed-label.orange { color: #c2410c; }
+        .extra-bed-controls {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: white;
+            border: 1.5px solid #bae6fd;
+            border-radius: 12px;
+            overflow: hidden;
+            width: fit-content;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .extra-bed-controls.orange-border { border-color: #fed7aa; }
+        .bed-btn {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: #0369a1;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .bed-btn.orange { color: #c2410c; }
+        .bed-btn:hover:not(:disabled) { background: #e0f2fe; }
+        .bed-btn.orange:hover:not(:disabled) { background: #ffedd5; }
+        .bed-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .bed-count {
+            min-width: 44px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 900;
+            color: #1e293b;
+            border-left: 1.5px solid #bae6fd;
+            border-right: 1.5px solid #bae6fd;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bed-count.orange-border { border-color: #fed7aa; }
+        .extra-bed-info {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .extra-bed-cost {
+            font-size: 12px;
+            font-weight: 800;
+            color: #0369a1;
+            margin-top: 4px;
+        }
+        .extra-bed-cost.orange { color: #c2410c; }
+    </style>
+</head>
+<body class="pb-40">
+
+
+
+    <header class="bg-white border-b-2 border-slate-200 sticky top-0 z-50 px-6 py-4 shadow-sm">
+        <div class="container mx-auto max-w-5xl flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <img src="https://scontent-bkk1-2.xx.fbcdn.net/v/t39.30808-6/660876550_122218485902048367_3666647204785772609_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=tmOjrYQto_0Q7kNvwHQIGKV&_nc_oc=Ado509aisdu6UGijymttjet9DsXqGZtLBqhdSbg9HB3CGbQXOAjUoVIW-dp_edyvnic&_nc_zt=23&_nc_ht=scontent-bkk1-2.xx&_nc_gid=WY9fbpK4IMH9eVIfwaAKxA&_nc_ss=7b2a8&oh=00_Af6Uh3HqahiexhUhKusy-kcs4ZKpSp9ggWdUwR_WblIx_Q&oe=6A108866" alt="Logo" class="h-12 w-auto">
+                <div>
+                    <h1 class="text-xl font-black tracking-widest text-slate-800 leading-none uppercase">Resort Radisson Hua Hin 
+</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto max-w-5xl px-4 py-12">
+        <div class="grid grid-cols-1 gap-16">
+            
+            <!-- Oysters Villa -->
+            <div class="room-card relative">
+        
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="slider-v1">                        
+                        <img src="https://aw-d.tripcdn.com/images/1mc4p12000bbmhe8sAAD4_W_1280_853_R5.webp" class="slider-item">
+                        <img src="https://aw-d.tripcdn.com/images/1mc3112000bbmhdor5B61_W_1280_853_R5.webp" class="slider-item">
+                        <img src="https://pix8.agoda.net/property/304275/909585666/f35e9454ed768e9afd582a5de95faf19.jpeg?ce=0&s=1024x" class="slider-item">
+                        <img src="https://aw-d.tripcdn.com/images/1mc6712000nqjs27o87C7_W_1280_853_R5.webp" class="slider-item">
+                        <img src="https://aw-d.tripcdn.com/images/0221512000k5z1uzqE8B1_W_1280_853_R5.webp" class="slider-item">
+                        
+                    </div>
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v1', -1)">❮</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v1', 1)">❯</button>
+                </div>
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold text-slate-800 uppercase tracking-tight">Superior Room Ocean View</h3>
+                            <p class="text-xs font-bold text-orange-500 mt-1 mb-6 uppercase tracking-widest">ห้อง •  สำหรับ 2 ท่าน+</p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6 border-slate-100">
+                                <div class="amenity-tag"><span class="fac-label">Bedroom</span><span class="fac-value">Master suite, King-sized bed</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Bathroom</span><span class="fac-value">Fully equipped bathroom</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Private Pool</span><span class="fac-value">Exclusive ocean view</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Soaking tub</span><span class="fac-value">Premium bathtub included</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Free WiFi</span><span class="fac-value">High-speed connectivity</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Meals</span><span class="fac-value">Free Breakfast & Dinner</span></div>
+                            </div>
+
+                            <!-- Extra Bed -->
+                            <div class="extra-bed-section">
+                                <div class="extra-bed-label">🛏️ เสริมเตียง (สูงสุด 2 ท่าน • ท่านละ ฿500)</div>
+                                <div class="flex items-center gap-4">
+                                    <div class="extra-bed-controls">
+                                        <button class="bed-btn" onclick="changeBed('v1', -1)" id="bed-minus-v1" disabled>−</button>
+                                        <div class="bed-count" id="bed-count-v1">0</div>
+                                        <button class="bed-btn" onclick="changeBed('v1', 1)" id="bed-plus-v1">+</button>
+                                    </div>
+                                    <div>
+                                        <div class="extra-bed-info">เพิ่มเตียงเสริมสำหรับแขกเพิ่มเติม</div>
+                                        <div class="extra-bed-cost" id="bed-cost-v1">฿0 / คืน</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3 items-end">
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">จำนวนท่าน</label>
+                                <select id="guest-v1" onchange="updatePrice('v1')" class="select-input">
+                                    <option value="1800">2 ท่าน 1,800.-</option>
+                                
+                                </select>
+                            </div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-in</label><input type="date" id="in-v1" onchange="updatePrice('v1')" class="date-input"></div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-out</label><input type="date" id="out-v1" onchange="updatePrice('v1')" class="date-input"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-4xl font-black text-slate-900"><span id="price-v1">฿3,520</span> <span class="text-xs text-slate-400" id="night-v1">/ Night</span></p>
+                            <p class="text-xs text-slate-400 mt-1" id="bed-summary-v1"></p>
+                        </div>
+                        <button onclick="book('v1', 'Oysters Villa')" class="btn-booking text-white px-12 py-4 font-bold text-sm uppercase tracking-widest shadow-lg">Reserve Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shark Villa -->
+            <div class="room-card relative">
+                <div class="absolute top-6 right-6 discount-badge">SAVE 40%</div>
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="slider-v2">
+                        <img src="https://i.postimg.cc/hPjvxRn9/631065129-1782864122380168-2498361686854478831-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/CMJdzL3J/605016393-1296575575569403-1479964550148810818-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/nczr7fxm/605504740-752042717928295-1561031907364565614-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/DyZ0s3hQ/630223919-1941107243203084-3440236360479124033-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/nVTMCcyk/601386291-1212122364165666-6775305616987609778-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/kMwDBX0s/631629437-1963896380903115-7075464193485720529-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/SQVjJNB7/632073611-2111700463007641-7583271617261775802-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/8kwsjP2h/632320385-3007612102962815-3166338614852947135-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/jqvCLdp4/633083790-1444725780531743-3816126300445302612-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/1RM4f5k0/637212474-1269514981764315-1478310397785048169-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/hPjvxRnb/662907784-1303128918338304-5412711103623460916-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/VL6vMPwX/667359527-1405509667930439-4798601739159469074-n.jpg" class="slider-item">
+                    </div>
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v2', -1)">❮</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v2', 1)">❯</button>
+                </div>
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold text-slate-800 uppercase tracking-tight">Shark Villa</h3>
+                            <p class="text-xs font-bold text-orange-500 mt-1 mb-6 uppercase tracking-widest">Premium Living • 3 ห้องนอน สำหรับ 4-6 ท่าน</p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6 border-slate-100">
+                                <div class="amenity-tag"><span class="fac-label">Bedroom</span><span class="fac-value">Master suite, King-sized bed</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Bathroom</span><span class="fac-value">Fully equipped bathroom</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Private Pool</span><span class="fac-value">Exclusive ocean view</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Soaking tub</span><span class="fac-value">Premium bathtub included</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Free WiFi</span><span class="fac-value">High-speed connectivity</span></div>
+                            </div>
+
+                            <!-- Extra Bed -->
+                            <div class="extra-bed-section">
+                                <div class="extra-bed-label">🛏️ เสริมเตียง (สูงสุด 3 ท่าน • ท่านละ ฿500)</div>
+                                <div class="flex items-center gap-4">
+                                    <div class="extra-bed-controls">
+                                        <button class="bed-btn" onclick="changeBed('v2', -1)" id="bed-minus-v2" disabled>−</button>
+                                        <div class="bed-count" id="bed-count-v2">0</div>
+                                        <button class="bed-btn" onclick="changeBed('v2', 1)" id="bed-plus-v2">+</button>
+                                    </div>
+                                    <div>
+                                        <div class="extra-bed-info">เพิ่มเตียงเสริมสำหรับแขกเพิ่มเติม</div>
+                                        <div class="extra-bed-cost" id="bed-cost-v2">฿0 / คืน</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3 items-end">
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">จำนวนท่าน</label>
+                                <select id="guest-v2" onchange="updatePrice('v2')" class="select-input">
+                                    <option value="4990">4-6 ท่าน 4,990.-</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-in</label><input type="date" id="in-v2" onchange="updatePrice('v2')" class="date-input"></div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-out</label><input type="date" id="out-v2" onchange="updatePrice('v2')" class="date-input"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-4xl font-black text-slate-900"><span id="price-v2">฿4,990</span> <span class="text-xs text-slate-400" id="night-v2">/ Night</span></p>
+                            <p class="text-xs text-slate-400 mt-1" id="bed-summary-v2"></p>
+                        </div>
+                        <button onclick="book('v2', 'Shark Villa')" class="btn-booking text-white px-12 py-4 font-bold text-sm uppercase tracking-widest shadow-lg">Reserve Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dolphin Villa -->
+            <div class="room-card relative">
+                <div class="absolute top-6 right-6 discount-badge">SAVE 40%</div>
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="slider-v3">
+                        <img src="https://i.postimg.cc/tJhgR9G3/668820600-1321520616456723-8489470775123943034-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/XqwvNn6P/667248896-979730087823682-7726253139223522669-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/prDdVPM6/662898216-1256715269998200-8184937779178367629-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/8c85Vj9d/604647819-1183291933451578-8899101500199023560-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/zvnfDqYH/606058515-721246401038679-4887471350510952776-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/66Rqff4Q/678164254-972164985673479-1712850631296288621-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/xjH833Nf/663284680-1962931951031354-8661880640575386616-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/QCpMNjrG/663313484-804873672688686-1070847075381168957-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/nrvLVnfv/663999876-26895144293423709-7304052440822070234-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/90GfXcHv/666220088-948941780833023-2195471135594002285-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/WzM4pscm/667245787-2192744768150900-2908806017856749210-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/sxp2f3C5/668130792-1996097134312187-4987791121510152650-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/2y45jCN9/668786773-1599917774410035-8649322573485646256-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/Gtkp3b1n/664522975-1672002507286706-4363400916185891847-n.jpg" class="slider-item">
+                    </div>
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v3', -1)">❮</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v3', 1)">❯</button>
+                </div>
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold text-slate-800 uppercase tracking-tight">Dolphin Villa</h3>
+                            <p class="text-xs font-bold text-orange-500 mt-1 mb-6 uppercase tracking-widest">Grand Family • 4 ห้องนอน สำหรับ 6-8 ท่าน</p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6 border-slate-100">
+                                <div class="amenity-tag"><span class="fac-label">Bedroom</span><span class="fac-value">Master suite, King-sized bed</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Bathroom</span><span class="fac-value">Fully equipped bathroom</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Views</span><span class="fac-value">Exclusive ocean view</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Soaking tub</span><span class="fac-value">Premium bathtub included</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Free WiFi</span><span class="fac-value">High-speed connectivity</span></div>
+                                <div class="amenity-tag"><span class="fac-label">Meals</span><span class="fac-value">Free Breakfast & Dinner</span></div>
+                            </div>
+
+                            <!-- Extra Bed -->
+                            <div class="extra-bed-section">
+                                <div class="extra-bed-label">🛏️ เสริมเตียง (สูงสุด 4 ท่าน • ท่านละ ฿500)</div>
+                                <div class="flex items-center gap-4">
+                                    <div class="extra-bed-controls">
+                                        <button class="bed-btn" onclick="changeBed('v3', -1)" id="bed-minus-v3" disabled>−</button>
+                                        <div class="bed-count" id="bed-count-v3">0</div>
+                                        <button class="bed-btn" onclick="changeBed('v3', 1)" id="bed-plus-v3">+</button>
+                                    </div>
+                                    <div>
+                                        <div class="extra-bed-info">เพิ่มเตียงเสริมสำหรับแขกเพิ่มเติม</div>
+                                        <div class="extra-bed-cost" id="bed-cost-v3">฿0 / คืน</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3 items-end">
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">จำนวนท่าน</label>
+                                <select id="guest-v3" onchange="updatePrice('v3')" class="select-input">
+                                    <option value="5590">6-8 ท่าน 5,590.-</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-in</label><input type="date" id="in-v3" onchange="updatePrice('v3')" class="date-input"></div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-slate-400 uppercase">Check-out</label><input type="date" id="out-v3" onchange="updatePrice('v3')" class="date-input"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-4xl font-black text-slate-900"><span id="price-v3">฿5,590</span> <span class="text-xs text-slate-400" id="night-v3">/ Night</span></p>
+                            <p class="text-xs text-slate-400 mt-1" id="bed-summary-v3"></p>
+                        </div>
+                        <button onclick="book('v3', 'Dolphin Villa')" class="btn-booking text-white px-12 py-4 font-bold text-sm uppercase tracking-widest shadow-lg">Reserve Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bryde's Villa -->
+            <div class="room-card relative border-2 border-orange-500">
+                <div class="absolute top-6 right-6 discount-badge bg-black text-orange-400">ULTIMATE DEAL</div>
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="slider-v4">
+                        <img src="https://i.postimg.cc/bwL4XWWY/662600077-1292483299458580-8321146791954093136-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/wBGPMJ6m/664312614-1458926205774352-6390110568703128770-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/BbxwmV2q/643626785-1715069323237723-8306079464477088809-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/sxp0TN5h/647074929-2253199985210962-8629756426577013853-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/7hgQKWSH/662238331-2019011369000193-2981127863517475353-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/QCpnfyc1/662432109-1839697910032629-2063086435623247281-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/6qd1MmCr/663269519-4273583362930427-3857309653844423739-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/ZnrDwM66/664317393-1739498314099460-8828043778123574531-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/yxFrLb06/665242859-1434244004569902-42476990715703022-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/vTWS0N56/665268558-1995692861314395-8495879920105197156-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/yxFrLb0k/666478601-1974415446490910-5908160109062088719-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/Kjns0Htv/667307657-1483896406716205-2778233562624397075-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/8chnZ0LV/667313178-2400888610413858-7232716803934292308-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/HnQP6hb8/667375341-1315714983788639-5591637094668783455-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/prDdVPM6/662898216-1256715269998200-8184937779178367629-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/YqzsgTpD/664487725-2123908238150010-6702069201990868610-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/yYyb92VG/677036832-2046148606336712-6654214275151832847-n.jpg" class="slider-item">
+                        <img src="https://i.postimg.cc/tCNMP8Xf/684206282-1975007727223646-3552043520420996682-n.jpg" class="slider-item">
+                    </div>
+                    <button class="absolute left-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v4', -1)">❮</button>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 nav-btn" onclick="moveSlide('v4', 1)">❯</button>
+                </div>
+                <div class="p-8 bg-orange-50/30">
+                    <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold text-orange-700 uppercase tracking-tight">Bryde's Villa</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 mb-6 uppercase tracking-widest">Ultra Luxury • 4 ห้องนอน สำหรับ 6-8 ท่าน</p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 border-t pt-6 border-orange-200">
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Bedroom</span><span class="fac-value">Master suite, King-sized bed</span></div>
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Bathroom</span><span class="fac-value">Fully equipped bathroom</span></div>
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Private Pool</span><span class="fac-value">Exclusive ocean view</span></div>
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Soaking tub</span><span class="fac-value">Premium bathtub included</span></div>
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Free WiFi</span><span class="fac-value">High-speed connectivity</span></div>
+                                <div class="amenity-tag"><span class="fac-label text-orange-600">Meals</span><span class="fac-value">Free Breakfast & Dinner</span></div>
+                            </div>
+
+                            <!-- Extra Bed -->
+                            <div class="extra-bed-section orange-theme">
+                                <div class="extra-bed-label orange">🛏️ เสริมเตียง (สูงสุด 4 ท่าน • ท่านละ ฿500)</div>
+                                <div class="flex items-center gap-4">
+                                    <div class="extra-bed-controls orange-border">
+                                        <button class="bed-btn orange" onclick="changeBed('v4', -1)" id="bed-minus-v4" disabled>−</button>
+                                        <div class="bed-count orange-border" id="bed-count-v4">0</div>
+                                        <button class="bed-btn orange" onclick="changeBed('v4', 1)" id="bed-plus-v4">+</button>
+                                    </div>
+                                    <div>
+                                        <div class="extra-bed-info">เพิ่มเตียงเสริมสำหรับแขกเพิ่มเติม</div>
+                                        <div class="extra-bed-cost orange" id="bed-cost-v4">฿0 / คืน</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3 items-end">
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-orange-600 uppercase">จำนวนท่าน</label>
+                                <select id="guest-v4" onchange="updatePrice('v4')" class="select-input border-orange-200">
+                                    <option value="6900">6-8 ท่าน 6,900.-</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-orange-600 uppercase">Check-in</label><input type="date" id="in-v4" onchange="updatePrice('v4')" class="date-input border-orange-200"></div>
+                            <div class="flex flex-col"><label class="text-[9px] font-bold text-orange-600 uppercase">Check-out</label><input type="date" id="out-v4" onchange="updatePrice('v4')" class="date-input border-orange-200"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-4xl font-black text-orange-700"><span id="price-v4">฿6,900</span> <span class="text-xs text-slate-400" id="night-v4">/ Night</span></p>
+                            <p class="text-xs text-orange-500 mt-1" id="bed-summary-v4"></p>
+                        </div>
+                        <button onclick="book('v4', 'Bryde\'s Villa')" class="bg-orange-600 text-white px-12 py-5 rounded-xl font-bold text-lg uppercase tracking-widest shadow-xl hover:bg-orange-700 transition-all">Book Exclusive</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="booking-bar" class="fixed bottom-0 left-0 right-0 bg-slate-900/98 backdrop-blur-xl text-white p-8 transform translate-y-full transition-all duration-700 z-[100] border-t border-orange-500">
+        <div class="container mx-auto max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <button onclick="clearCart()" class="text-xs text-red-400 hover:underline">ล้างทั้งหมด</button>
+                <div>
+                    <h4 class="font-black text-xl text-orange-400 uppercase tracking-tight" id="summary-name">VILLA SELECTED</h4>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest" id="summary-info">CHECK DETAILS BEFORE PROCEEDING</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-10">
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase">Grand Total</p>
+                    <p class="text-4xl font-black text-white" id="summary-total">฿0</p>
+                </div>
+                <button onclick="toggleModal(true)" class="bg-orange-500 text-white px-12 py-5 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-white hover:text-orange-600 transition-all shadow-lg">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="user-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[200] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-md p-10 shadow-2xl border-4 border-slate-100 relative">
+            <h2 class="text-2xl font-black text-slate-800 uppercase mb-1">Booking Details</h2>
+            <div class="space-y-6 mt-8">
+                <div>
+                    <label class="fac-label block mb-2 text-orange-600">Full Name</label>
+                    <input type="text" id="user-name" placeholder="Enter your name" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl font-bold outline-none focus:border-orange-500 transition-all">
+                </div>
+                <div>
+                    <label class="fac-label block mb-2 text-orange-600">Phone Number</label>
+                    <input type="tel" id="user-phone" maxlength="10" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="08XXXXXXXX" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl font-bold outline-none focus:border-orange-500 transition-all">
+                </div>
+            </div>
+            <div class="flex gap-3 mt-10 border-t pt-8">
+                <button onclick="toggleModal(false)" class="flex-1 py-4 font-bold uppercase text-xs text-slate-400">Cancel</button>
+                <button onclick="sendToDiscord()" class="flex-[2] py-4 bg-slate-900 text-white rounded-xl font-bold uppercase text-xs tracking-widest">Send Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Slider Logic ---
+        const slideIndexes = { v1: 0, v2: 0, v3: 0, v4: 0 };
+        function moveSlide(id, step) {
+            const wrapper = document.getElementById('slider-' + id);
+            if (!wrapper) return; 
+            const items = wrapper.querySelectorAll('.slider-item');
+            if (items.length === 0) return; 
+            slideIndexes[id] = (slideIndexes[id] + step + items.length) % items.length;
+            wrapper.style.transform = `translateX(-${slideIndexes[id] * 100}%)`;
+        }
+
+        // --- Extra Bed Config ---
+        const extraBedMax = { v1: 2, v2: 3, v3: 4, v4: 4 };
+        const extraBedCounts = { v1: 0, v2: 0, v3: 0, v4: 0 };
+        const extraBedPricePerPerson = 500;
+
+        function changeBed(id, delta) {
+            const max = extraBedMax[id];
+            const current = extraBedCounts[id];
+            const next = current + delta;
+            if (next < 0 || next > max) return;
+
+            extraBedCounts[id] = next;
+            document.getElementById('bed-count-' + id).innerText = next;
+
+            // Update minus/plus buttons
+            document.getElementById('bed-minus-' + id).disabled = (next === 0);
+            document.getElementById('bed-plus-' + id).disabled = (next === max);
+
+            // Update cost display
+            const costPerNight = next * extraBedPricePerPerson;
+            document.getElementById('bed-cost-' + id).innerText = costPerNight > 0
+                ? `+฿${costPerNight.toLocaleString()} / คืน`
+                : '฿0 / คืน';
+
+            // Refresh price display
+            updatePrice(id);
+
+            // Update cart if already booked
+            updateCartIfBooked(id);
+        }
+
+        // --- Initial Config ---
+        window.onload = () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.setAttribute('min', today);
+            });
+        };
+
+        let bookingCart = [];
+
+        // --- Core Calculation Logic ---
+        function updatePrice(id) {
+            const basePricePerNight = parseInt(document.getElementById('guest-' + id).value);
+            const extraBeds = extraBedCounts[id];
+            const extraPerNight = extraBeds * extraBedPricePerPerson;
+            const totalPerNight = basePricePerNight + extraPerNight;
+
+            const cin = document.getElementById('in-' + id).value;
+            const cout = document.getElementById('out-' + id).value;
+            
+            const villaNames = { 
+                v1: 'Oysters Villa', 
+                v2: 'Shark Villa', 
+                v3: 'Dolphin Villa', 
+                v4: "Bryde's Villa"
+            };
+            const name = villaNames[id];
+
+            let nights = 0;
+            if (cin && cout) {
+                nights = Math.ceil((new Date(cout) - new Date(cin)) / 86400000);
+            }
+
+            const currentTotal = nights > 0 ? (nights * totalPerNight) : totalPerNight;
+            document.getElementById('price-' + id).innerText = `฿${currentTotal.toLocaleString()}`;
+            
+            if (nights > 0) {
+                document.getElementById('night-' + id).innerText = `/ ${nights} คืน`;
+            } else {
+                document.getElementById('night-' + id).innerText = `/ Night`;
+            }
+
+            // Show bed summary under price
+            const bedSummaryEl = document.getElementById('bed-summary-' + id);
+            if (bedSummaryEl) {
+                if (extraBeds > 0) {
+                    bedSummaryEl.innerText = `รวมเสริมเตียง ${extraBeds} ท่าน (+฿${(extraBeds * extraBedPricePerPerson).toLocaleString()}/คืน)`;
+                } else {
+                    bedSummaryEl.innerText = '';
+                }
+            }
+
+            // Update cart if villa already in cart
+            const existingIndex = bookingCart.findIndex(item => item.villaName === name);
+            if (existingIndex > -1) {
+                if (nights > 0) {
+                    const guestSelect = document.getElementById('guest-' + id);
+                    const guestText = guestSelect.options[guestSelect.selectedIndex].text.split(' ')[0] + " ท่าน";
+                    bookingCart[existingIndex] = {
+                        villaName: name,
+                        guests: guestText,
+                        nights: nights,
+                        checkIn: cin,
+                        checkOut: cout,
+                        totalPrice: currentTotal,
+                        extraBeds: extraBeds
+                    };
+                    updateSummary();
+                } else {
+                    bookingCart.splice(existingIndex, 1);
+                    updateSummary();
+                }
+            }
+        }
+
+        function updateCartIfBooked(id) {
+            const villaNames = { v1: 'Oysters Villa', v2: 'Shark Villa', v3: 'Dolphin Villa', v4: "Bryde's Villa" };
+            const name = villaNames[id];
+            const existingIndex = bookingCart.findIndex(item => item.villaName === name);
+            if (existingIndex > -1) {
+                updatePrice(id);
+            }
+        }
+
+        function clearCart() {
+            bookingCart = [];
+            updateSummary();
+        }
+
+        function book(id, name) {
+            const basePricePerNight = parseInt(document.getElementById('guest-' + id).value);
+            const extraBeds = extraBedCounts[id];
+            const extraPerNight = extraBeds * extraBedPricePerPerson;
+            const totalPerNight = basePricePerNight + extraPerNight;
+
+            const cin = document.getElementById('in-' + id).value;
+            const cout = document.getElementById('out-' + id).value;
+            const guestSelect = document.getElementById('guest-' + id);
+            const guestText = guestSelect.options[guestSelect.selectedIndex].text.split(' ')[0] + " ท่าน";
+
+            if (!cin || !cout) return alert("โปรดเลือกวันที่ก่อน!");
+            const nights = Math.ceil((new Date(cout) - new Date(cin)) / 86400000);
+            if (nights <= 0) return alert("วันที่ Check-out ต้องหลังจาก Check-in!");
+
+            const totalForThisRoom = nights * totalPerNight;
+            
+            const existingRoomIndex = bookingCart.findIndex(item => item.villaName === name);
+            const roomData = {
+                villaName: name,
+                guests: guestText,
+                nights: nights,
+                checkIn: cin,
+                checkOut: cout,
+                totalPrice: totalForThisRoom,
+                extraBeds: extraBeds
+            };
+
+            if (existingRoomIndex > -1) {
+                bookingCart[existingRoomIndex] = roomData;
+            } else {
+                bookingCart.push(roomData);
+            }
+
+            updateSummary();
+        }
+
+        function updateSummary() {
+            if (bookingCart.length === 0) {
+                document.getElementById('booking-bar').classList.add('translate-y-full');
+                return;
+            }
+
+            let grandTotal = 0;
+            bookingCart.forEach(item => { grandTotal += item.totalPrice; });
+
+            document.getElementById('summary-name').innerText = `เลือกแล้ว ${bookingCart.length} วิลล่า`;
+            document.getElementById('summary-info').innerText = "ราคาสรุปจะอัปเดตตามวันที่เลือกปัจจุบัน";
+            document.getElementById('summary-total').innerText = `฿${grandTotal.toLocaleString()}`;
+            document.getElementById('booking-bar').classList.remove('translate-y-full');
+        }
+
+        function toggleModal(show) {
+            document.getElementById('user-modal').classList.toggle('hidden', !show);
+        }
+
+        function sendToDiscord() {
+            const userName = document.getElementById('user-name').value;
+            const phone = document.getElementById('user-phone').value;
+            if(!userName || phone.length < 10) return alert("กรอกข้อมูลให้ครบถ้วน!");
+            
+            let grandTotal = 0;
+            let villaDetails = "";
+            let firstVilla = bookingCart[0].villaName;
+
+            bookingCart.forEach((item, i) => {
+                grandTotal += item.totalPrice;
+                const bedNote = item.extraBeds > 0 ? ` | เสริมเตียง ${item.extraBeds} ท่าน` : '';
+                villaDetails += `\n🏠 ${i+1}. ${item.villaName}\n   └ ${item.guests}${bedNote} | ${item.nights} คืน | ฿${item.totalPrice.toLocaleString()}\n   └ Check-in: ${item.checkIn} | Out: ${item.checkOut}\n`;
+            });
+
+            const webhookUrl = "https://discord.com/api/webhooks/1484826014004805702/Cw74m0BTseoIrxwy7FcWEZ-LGbSJxP4NBySHcP_SMNc9Ok52gBBpiRAq4fIY3hlVL0T6";
+            
+            const message = {
+                embeds: [{
+                    title: "🔔 [ รายการจองใหม่ - อัปเดตล่าสุด ]",
+                    color: 16744192,
+                    fields: [
+                        { name: "👤 ชื่อลูกค้า", value: userName, inline: true },
+                        { name: "📞 เบอร์โทรศัพท์", value: phone, inline: true },
+                        { name: "📋 รายละเอียดการจอง", value: "```" + villaDetails + "```" },
+                        { name: "💰 ยอดรวมทั้งสิ้น", value: `฿${grandTotal.toLocaleString()}`, inline: true }
+                    ],
+                    timestamp: new Date(),
+                    footer: { text: `จองทั้งหมด ${bookingCart.length} วิลล่า` }
+                }]
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(message)
+            }).then(() => {
+                window.location.href = `2.html?price=${grandTotal}&cust=${encodeURIComponent(userName)}&villa=${encodeURIComponent(firstVilla + (bookingCart.length > 1 ? " (และอื่นๆ)" : ""))}`;
+            });
+        }
+    </script>
+</body>
+</html>
